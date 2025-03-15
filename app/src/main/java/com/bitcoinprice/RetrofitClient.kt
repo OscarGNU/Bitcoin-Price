@@ -1,5 +1,6 @@
 package com.bitcoinprice
 
+import android.util.Log
 import com.example.fintrack.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -20,6 +21,7 @@ object RetrofitClient {
                 val requestBuilder: Request.Builder =
                     original.newBuilder().header("X-API-Token", "Bearer $token")
                 val request: Request = requestBuilder.build()
+                Log.d("API_TEST", "Request Header: ${request.header("X-API-Token")}")
                 chain.proceed(request)
             }
             return clientBuilder.build()
