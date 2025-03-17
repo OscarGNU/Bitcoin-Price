@@ -1,4 +1,4 @@
-package com.bitcoinprice
+package com.example.fintrack.common.model
 
 data class BitcoinPriceResponse(
     val symbol: String,
