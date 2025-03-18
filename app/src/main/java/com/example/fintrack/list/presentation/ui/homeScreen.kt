@@ -1,9 +1,12 @@
 package com.example.fintrack.list.presentation.ui
 
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,21 +24,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.fintrack.R
 
 @Composable
-fun SplashScreen() {
+fun SplashScreen(navController: NavController) {
     // Inicia el temporizador y navega después de 6 segundos
-   LaunchedEffect(Unit) {
+    LaunchedEffect(Unit) {
         delay(6000) // Espera 6 segundos
-        //navController.navigate("main") {
-          //  popUpTo("splash") { inclusive = true } // Evita volver a la SplashScreen
-        }
-
+    }
 
     // Contenido de la SplashScreen
-    SplashScreenContent()
+    SplashScreenContent(navController)
 }
 
 @Composable
-fun SplashScreenContent() {
+fun SplashScreenContent(navController: NavController? = null) {
     var textColor by remember { mutableStateOf(Color.White) } // Estado del color del texto
 
     // Contenedor de la pantalla con fondo oscuro
@@ -44,33 +44,45 @@ fun SplashScreenContent() {
             .fillMaxSize()
             .background(Color(0xFF050715)) // Color de fondo oscuro
     ) {
+        // Imagen en el fondo
+        Image(
+            painter = painterResource(id = R.drawable.screensplas), // Reemplaza con tu logo
+            contentDescription = "Logo de la empresa",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize() // La imagen cubre toda la pantalla
+        )
+
         Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 80.dp), // Ajusta la altura de los elementos
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom
         ) {
-            // Logo de la app
-            Image(
-                painter = painterResource(id = R.drawable.screensplas), // Reemplaza con tu logo
-                contentDescription = "Logo de la empresa",
-                contentScale = ContentScale.Fit,
-                modifier = Modifier.size(300.dp) // Ajusta el tamaño manualmente
-            )
-
-            Spacer(modifier = Modifier.weight(1f)) // Espaciado para colocar el texto en la parte inferior
-
             // Texto interactivo "Bitcoin Price"
             Text(
                 text = "Bitcoin Price",
                 color = textColor,
-                fontSize = 24.sp,
+                fontSize = 32.sp, // Tamaño del texto
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .clickable {
-                        textColor = if (textColor == Color.White) Color.Yellow else Color.White
-                    }
-                    .padding(bottom = 50.dp) // Ajusta el espaciado inferior
+                    .padding(bottom = 20.dp) // Espaciado con el botón
             )
+
+            // Botón ovalado con color fijo amarillo y texto negro
+            Button(
+                onClick = {
+                    navController?.navigate("bitcoin_price_screen") // Navega a la pantalla de precio de BTC
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
+                shape = RoundedCornerShape(50.dp), // Bordes ovalados
+                modifier = Modifier
+                    .width(220.dp)
+                    .height(55.dp)
+            ) {
+                Text(text = "Ver Precio BTC", fontSize = 18.sp, color = Color.Black, fontWeight = FontWeight.Bold)
+            }
         }
     }
 }
@@ -79,6 +91,6 @@ fun SplashScreenContent() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewSplashScreen() {
-    // Aquí solo mostramos el contenido sin necesidad de NavController
     SplashScreenContent()
 }
+
