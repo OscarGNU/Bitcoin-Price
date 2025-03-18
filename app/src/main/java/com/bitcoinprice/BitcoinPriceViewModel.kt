@@ -1,8 +1,11 @@
 package com.bitcoinprice
 
+//import android.telecom.Call
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavHostController
+//import com.example.fintrack.common.model.Response
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -10,7 +13,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BitcoinPriceViewModel : ViewModel() {
+class BitcoinPriceViewModel(function: NavHostController, viewModel: () -> Unit) : ViewModel() {
+
 
     private val _bitcoinPrice = MutableStateFlow<BitcoinPriceResponse?>(null)
     val bitcoinPrice: StateFlow<BitcoinPriceResponse?> = _bitcoinPrice
