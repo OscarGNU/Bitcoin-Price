@@ -5,12 +5,14 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.bitcoinprice.BitcoinPriceViewModel
+import com.example.fintrack.list.presentation.ui.BitcoinPriceViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
-    private val viewModel: BitcoinPriceViewModel by viewModels()
+
+    private val viewModel by viewModels<BitcoinPriceViewModel> { BitcoinPriceViewModel.Factory }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
